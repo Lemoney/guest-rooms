@@ -11,6 +11,6 @@ public interface RoomService {
     boolean isRoomAvailable(int id);
 
     void saveRoom(Room room);
-    void editRoom(int id);
+    void editRoom(int id, int singleBed, int doubleBed, boolean balcony);
     void deleteRoom(int id);
 }

@@ -15,40 +15,62 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRooms() { //Będę używął jak połącze z bazą danych
+    public List<Room> getAllRooms() {
         return rooms;
     }
 
     @Override
     public Room getRoomById(int id) {
         for (Room room : rooms) {
-            if (room.getRoomID() == id) {
+            if (room.getRoomNumber() == id) {
                 return room;
             }
         }
         return null;
     }
 
+    public String showRoomDetails(int id) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == id) {
+                return room.roomDetails();
+            }
+        }
+        return null;
+    }
+
     @Override
-    public boolean isRoomAvailable(int id) {
+    public boolean isRoomAvailable(int id) { //jak połączę z bazą danych
         return false;
     }
 
     @Override
-    public void saveRoom(Room room) { //next to do
+    public void saveRoom(Room room) {
+        rooms.add(room);
     }
 
     @Override
-    public void editRoom(int id) {
-
+    public void editRoom(int id, int singleBed, int doubleBed, boolean balcony) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == id) {
+                room.setSingleBed(singleBed);
+                room.setDoubleBed(doubleBed);
+                room.setBalcony(balcony);
+            }
+        }
     }
 
     @Override
     public void deleteRoom(int id) {
-
+        rooms.removeIf(room -> room.getRoomNumber() == id);
     }
 
-    public void saveRooms(List<Room> rooms) {
-
+    public List<Room> showRoomsWithNumberOfCapacity(int capacity) {
+        List<Room> roomList = new ArrayList<>();
+        for (Room room : rooms) {
+            if (room.getRoomCapacity() == capacity) {
+                roomList.add(room);
+            }
+        }
+        return roomList;
     }
 }
