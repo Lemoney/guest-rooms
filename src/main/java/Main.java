@@ -7,9 +7,6 @@ import java.util.Scanner;
 
 public class Main {
 
-    //POROBIC Z GITEM
-
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Room> rooms = defaultRooms();
