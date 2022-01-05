@@ -13,8 +13,8 @@ public class UserDaoImpl implements UserDao {
 
     private Connection connection;
 
-
     String database = "pokoje_goscinne";
+
     String tableName = "users";
     String user = "root";
     String password = "password123$";
@@ -26,6 +26,29 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new LinkedList<>();
+        Statement statement;
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM " + tableName;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                String userRole = resultSet.getString("role");
+                users.add(new User(id, login, password, Roles.valueOf(userRole)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     @Override
@@ -122,27 +145,4 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-
-    @Override
-    public List<User> getAllUsers() {
-        List<User> users = new LinkedList<>();
-        Statement statement;
-
-        try {
-            statement = connection.createStatement();
-            String query = "SELECT * FROM " + tableName;
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("ID");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                String userRole = resultSet.getString("role");
-                users.add(new User(id, login, password, Roles.valueOf(userRole.toUpperCase(Locale.ROOT))));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
 }

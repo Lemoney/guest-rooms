@@ -15,18 +15,18 @@ public class RoomServiceImplTest {
     @Before
     public void setUp() throws Exception {
         rooms = new ArrayList<>();
-        rooms.add(new Room(1, 1, 1, true));
-        rooms.add(new Room(2, 1, 2, true));
-        rooms.add(new Room(3, 2, 1, false));
-        rooms.add(new Room(4, 0, 2, false));
-        rooms.add(new Room(5, 0, 0, false));
+        rooms.add(new Room("1", 1, 1, true));
+        rooms.add(new Room("2", 1, 2, true));
+        rooms.add(new Room("3", 2, 1, false));
+        rooms.add(new Room("4", 0, 2, false));
+        rooms.add(new Room("5", 0, 0, false));
         roomService = new RoomServiceImpl(rooms);
     }
 
     @Test
     public void getAllRooms(){
         List<Room> roomList = new ArrayList<>(List.copyOf(rooms));
-        Room nextRoom = new Room(20, 1, 1, true);
+        Room nextRoom = new Room("20", 1, 1, true);
 
         roomList.add(nextRoom);
         roomService.saveRoom(nextRoom);
@@ -36,18 +36,18 @@ public class RoomServiceImplTest {
 
     @Test
     public void getRoomByIdCorrect() {
-        assertEquals(rooms.get(0), roomService.getRoomById(1));
+        assertEquals(rooms.get(0), roomService.getRoomByRoomNumber("1"));
     }
 
     @Test
     public void getRoomByIdNotCorrect() {
-        assertNotEquals(rooms.get(3), roomService.getRoomById(1));
+        assertNotEquals(rooms.get(3), roomService.getRoomByRoomNumber("1"));
     }
 
     @Test
     public void saveRoom() {
         List<Room> roomList = new ArrayList<>(List.copyOf(rooms));
-        Room room20 = new Room(20, 1, 1, true);
+        Room room20 = new Room("20", 1, 1, true);
         roomList.add(room20);
         roomService.saveRoom(room20);
         assertEquals(roomList.toString(), rooms.toString());
@@ -57,7 +57,7 @@ public class RoomServiceImplTest {
     public void deleteRoom() {
         List<Room> roomList = new ArrayList<>(List.copyOf(rooms));
         roomList.remove(0);
-        roomService.deleteRoom(1);
+        roomService.deleteRoom("1");
         assertEquals(roomList.toString(), rooms.toString());
 
     }

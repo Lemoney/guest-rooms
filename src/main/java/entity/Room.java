@@ -1,27 +1,27 @@
 package entity;
 
 public class Room {
-    private int roomNumber;
-    private int singleBed;
-    private int doubleBed;
+    private String roomNumber;
+    private int singleBeds;
+    private int doubleBeds;
     private int roomCapacity;
     private boolean balcony;
 
-    public Room(int roomNumber, int singleBed, int doubleBed, boolean balcony) {
+    public Room(String roomNumber, int singleBed, int doubleBed, boolean balcony) {
 
         this.roomNumber = roomNumber;
-        this.singleBed = singleBed;
-        this.doubleBed = doubleBed;
+        this.singleBeds = singleBed;
+        this.doubleBeds = doubleBed;
         this.balcony = balcony;
         if (singleBed > 0) roomCapacity += singleBed;
         if (doubleBed > 0) roomCapacity += doubleBed * 2;
     }
 
-    public int getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -29,20 +29,20 @@ public class Room {
         return roomCapacity;
     }
 
-    public int getSingleBed() {
-        return singleBed;
+    public int getSingleBeds() {
+        return singleBeds;
     }
 
-    public void setSingleBed(int singleBed) {
-        this.singleBed = singleBed;
+    public void setSingleBeds(int singleBeds) {
+        this.singleBeds = singleBeds;
     }
 
-    public int getDoubleBed() {
-        return doubleBed;
+    public int getDoubleBeds() {
+        return doubleBeds;
     }
 
-    public void setDoubleBed(int doubleBed) {
-        this.doubleBed = doubleBed;
+    public void setDoubleBeds(int doubleBeds) {
+        this.doubleBeds = doubleBeds;
     }
 
 
@@ -59,8 +59,8 @@ public class Room {
 
     public String roomDetails() {
         return "Room number: " + roomNumber +
-                ", \nSingle beds: " + singleBed +
-                ", \nDouble beds: " + doubleBed +
+                ", \nSingle beds: " + singleBeds +
+                ", \nDouble beds: " + doubleBeds +
                 ", \nBalcony: " + balcony + "\n";
     }
 

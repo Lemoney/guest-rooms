@@ -19,19 +19,18 @@ public class RoomServiceImpl implements RoomService {
         return rooms;
     }
 
-    @Override
-    public Room getRoomById(int id) {
+    public Room getRoomByRoomNumber(String roomNumber) {
         for (Room room : rooms) {
-            if (room.getRoomNumber() == id) {
+            if (room.getRoomNumber().equals(roomNumber)) {
                 return room;
             }
         }
         return null;
     }
 
-    public String showRoomDetails(int id) {
+    public String showRoomDetails(String roomNumber) {
         for (Room room : rooms) {
-            if (room.getRoomNumber() == id) {
+            if (room.getRoomNumber().equals(roomNumber)) {
                 return room.roomDetails();
             }
         }
@@ -49,19 +48,19 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void editRoom(int id, int singleBed, int doubleBed, boolean balcony) {
+    public void editRoom(String roomNumber, int singleBed, int doubleBed, boolean balcony) {
         for (Room room : rooms) {
-            if (room.getRoomNumber() == id) {
-                room.setSingleBed(singleBed);
-                room.setDoubleBed(doubleBed);
+            if (room.getRoomNumber().equals(roomNumber)) {
+                room.setSingleBeds(singleBed);
+                room.setDoubleBeds(doubleBed);
                 room.setBalcony(balcony);
             }
         }
     }
 
     @Override
-    public void deleteRoom(int id) {
-        rooms.removeIf(room -> room.getRoomNumber() == id);
+    public void deleteRoom(String roomNumber) {
+        rooms.removeIf(room -> room.getRoomNumber().equals(roomNumber));
     }
 
     public List<Room> showRoomsWithNumberOfCapacity(int capacity) {
