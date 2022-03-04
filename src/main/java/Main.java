@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         List<Room> rooms = defaultRooms();
         RoomServiceImpl roomService = new RoomServiceImpl(rooms);
 
@@ -27,26 +28,16 @@ public class Main {
                 }
                 case 3 -> {
                     System.out.println("Podaj numer pokoju:");
-                    String numer = scanner.next();
-                    System.out.println("Podaj ilość pojedynczych łóżek w pokoju:");
-                    int singlebed = scanner.nextInt();
-                    System.out.println("Podaj ilość podwójnych łóżek w pokoju:");
-                    int doubleBed = scanner.nextInt();
-                    System.out.println("Czy pokój posiada balkon? true/false");
-                    boolean balkon = scanner.nextBoolean();
-                    roomService.saveRoom(new Room(numer, singlebed, doubleBed, balkon));
-                    System.out.println("Dodano pokój: " + roomService.getRoomByRoomNumber(numer));
+                    Room room = typeRoom();
+                    roomService.saveRoom(room);
+                    System.out.println("Dodano pokój: " + roomService.getRoomByRoomNumber(room.getRoomNumber()));
                 }
                 case 4 -> {
+
                     System.out.println("Podaj numer pokoju który chcesz edytować");
-                    String numer = scanner.next();
-                    System.out.println("Podaj ilość pojedynczych łóżek w pokoju:");
-                    int singlebed = scanner.nextInt();
-                    System.out.println("Podaj ilość podwójnych łóżek w pokoju:");
-                    int doubleBed = scanner.nextInt();
-                    System.out.println("Czy pokój posiada balkon? true/false");
-                    boolean balkon = scanner.nextBoolean();
-                    roomService.editRoom(numer, singlebed, doubleBed, balkon);
+                    Room room = typeRoom();
+                    System.out.println(room);
+                    roomService.editRoom(room);
                 }
                 case 5 -> {
                     System.out.println("Podaj numer pokoju który chcesz usunąć");
@@ -64,10 +55,17 @@ public class Main {
                 }
             }
         }
+    }
 
-
-
-
+    private static Room typeRoom() {
+        String numer = scanner.next();
+        System.out.println("Podaj ilość pojedynczych łóżek w pokoju:");
+        int singlebed = scanner.nextInt();
+        System.out.println("Podaj ilość podwójnych łóżek w pokoju:");
+        int doubleBed = scanner.nextInt();
+        System.out.println("Czy pokój posiada balkon? true/false");
+        boolean balkon = scanner.nextBoolean();
+        return new Room(numer, singlebed, doubleBed, balkon);
     }
 
     private static void showMainMenu() {

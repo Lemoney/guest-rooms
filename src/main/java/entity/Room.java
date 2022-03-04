@@ -17,6 +17,7 @@ public class Room {
         if (doubleBed > 0) roomCapacity += doubleBed * 2;
     }
 
+
     public String getRoomNumber() {
         return roomNumber;
     }
@@ -34,6 +35,7 @@ public class Room {
     }
 
     public void setSingleBeds(int singleBeds) {
+        roomCapacity = doubleBeds + singleBeds;
         this.singleBeds = singleBeds;
     }
 
@@ -42,6 +44,7 @@ public class Room {
     }
 
     public void setDoubleBeds(int doubleBeds) {
+        roomCapacity = singleBeds + 2*doubleBeds;
         this.doubleBeds = doubleBeds;
     }
 

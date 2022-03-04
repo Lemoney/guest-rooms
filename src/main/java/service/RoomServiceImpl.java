@@ -58,6 +58,19 @@ public class RoomServiceImpl implements RoomService {
         }
     }
 
+    public void editRoom(Room editedRoom) {
+        for (Room room : rooms) {
+            if(room.getRoomNumber().equals(editedRoom.getRoomNumber())) {
+                room.setSingleBeds(editedRoom.getSingleBeds());
+                room.setDoubleBeds(editedRoom.getDoubleBeds());
+                room.setBalcony(editedRoom.isBalcony());
+                System.out.println(room);
+                System.out.println(editedRoom);
+            }
+
+        }
+    }
+
     @Override
     public void deleteRoom(String roomNumber) {
         rooms.removeIf(room -> room.getRoomNumber().equals(roomNumber));
