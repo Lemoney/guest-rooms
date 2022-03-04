@@ -1,6 +1,8 @@
 package service;
 
+import api.RoomDao;
 import api.RoomService;
+import dao.RoomDaoImpl;
 import entity.Room;
 
 import java.util.ArrayList;
@@ -8,31 +10,26 @@ import java.util.List;
 
 public class RoomServiceImpl implements RoomService {
 
-    List<Room> rooms;
+    RoomDao roomDao = new RoomDaoImpl();
 
-    public RoomServiceImpl(List<Room> rooms) {
-        this.rooms = rooms;
-    }
 
     @Override
     public List<Room> getAllRooms() {
-        return rooms;
+        return roomDao.getAllRooms();
     }
 
     public Room getRoomByRoomNumber(String roomNumber) {
+        List<Room> rooms = getAllRooms();
         for (Room room : rooms) {
-            if (room.getRoomNumber().equals(roomNumber)) {
-                return room;
-            }
+            if (room.getRoomNumber().equals(roomNumber)) return room;
         }
         return null;
     }
 
     public String showRoomDetails(String roomNumber) {
+        List<Room> rooms = getAllRooms();
         for (Room room : rooms) {
-            if (room.getRoomNumber().equals(roomNumber)) {
-                return room.roomDetails();
-            }
+            if (room.getRoomNumber().equals(roomNumber)) return room.roomDetails();
         }
         return null;
     }
@@ -44,11 +41,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void saveRoom(Room room) {
-        rooms.add(room);
+        roomDao.saveRoom(room);
     }
 
     @Override
     public void editRoom(String roomNumber, int singleBed, int doubleBed, boolean balcony) {
+        List<Room> rooms = getAllRooms();
         for (Room room : rooms) {
             if (room.getRoomNumber().equals(roomNumber)) {
                 room.setSingleBeds(singleBed);
@@ -59,6 +57,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     public void editRoom(Room editedRoom) {
+        List<Room> rooms = getAllRooms();
+
         for (Room room : rooms) {
             if(room.getRoomNumber().equals(editedRoom.getRoomNumber())) {
                 room.setSingleBeds(editedRoom.getSingleBeds());
@@ -73,10 +73,11 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(String roomNumber) {
-        rooms.removeIf(room -> room.getRoomNumber().equals(roomNumber));
+        roomDao.removeRoomByRoomNumber(Integer.parseInt(roomNumber));
     }
 
     public List<Room> showRoomsWithNumberOfCapacity(int capacity) {
+        List<Room> rooms = getAllRooms();
         List<Room> roomList = new ArrayList<>();
         for (Room room : rooms) {
             if (room.getRoomCapacity() == capacity) {
