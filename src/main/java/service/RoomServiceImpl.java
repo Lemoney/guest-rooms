@@ -6,7 +6,10 @@ import dao.RoomDaoImpl;
 import entity.Room;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RoomServiceImpl implements RoomService {
 
@@ -31,12 +34,22 @@ public class RoomServiceImpl implements RoomService {
         for (Room room : rooms) {
             if (room.getRoomNumber().equals(roomNumber)) return room.roomDetails();
         }
-        return null;
+        return "Room doesn't exist";
     }
 
     @Override
-    public boolean isRoomAvailable(int id) { //jak połączę z bazą danych
-        return false;
+    public boolean isRoomAvailable(String roomNumber) { //jak połączę z bazą danych
+        return true;
+    }
+
+    public boolean isRoomNumberAvailable(String roomNumber) {
+        List<Room> rooms = getAllRooms();
+        for (Room room : rooms) {
+            if (roomNumber.equals(room.getRoomNumber())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -60,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
         List<Room> rooms = getAllRooms();
 
         for (Room room : rooms) {
-            if(room.getRoomNumber().equals(editedRoom.getRoomNumber())) {
+            if (room.getRoomNumber().equals(editedRoom.getRoomNumber())) {
                 room.setSingleBeds(editedRoom.getSingleBeds());
                 room.setDoubleBeds(editedRoom.getDoubleBeds());
                 room.setBalcony(editedRoom.isBalcony());
@@ -73,7 +86,11 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(String roomNumber) {
-        roomDao.removeRoomByRoomNumber(Integer.parseInt(roomNumber));
+        if (isRoomNumberAvailable(roomNumber)) {
+            roomDao.removeRoomByRoomNumber(Integer.parseInt(roomNumber));
+        } else {
+            System.out.println("Room doesn't exist");
+        }
     }
 
     public List<Room> showRoomsWithNumberOfCapacity(int capacity) {

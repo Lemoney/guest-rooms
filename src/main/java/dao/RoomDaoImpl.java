@@ -9,7 +9,6 @@ import java.util.List;
 
 public class RoomDaoImpl implements RoomDao {
 
-    //Przetestuj czy wszystko ok
 
     private Connection connection;
 
@@ -35,11 +34,11 @@ public class RoomDaoImpl implements RoomDao {
 
         try {
             statement = connection.createStatement();
-            String query = "SELECT * FROM " + tableName;
+            String query = "SELECT * FROM " + tableName + " ORDER BY room_number";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                String roomNumber = resultSet.getString("room_number");
+                String roomNumber = String.valueOf(resultSet.getInt("room_number"));
                 int singleBeds = resultSet.getInt("single_beds");
                 int doubleBeds = resultSet.getInt("double_beds");
                 boolean balcony = resultSet.getBoolean("balcony");

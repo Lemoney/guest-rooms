@@ -8,9 +8,9 @@ public interface RoomService {
     List<Room> getAllRooms();
     Room getRoomByRoomNumber(String roomNumber);
 
-    boolean isRoomAvailable(int id);
+    boolean isRoomAvailable(String roomNumber);
 
     void saveRoom(Room room);
     void editRoom(String roomNumber, int singleBed, int doubleBed, boolean balcony);
-    void deleteRoom(String roomNumber);
+   void deleteRoom(String roomNumber);
 }

@@ -1,4 +1,5 @@
 import entity.Room;
+import inputs.InputReceiver;
 import service.RoomServiceImpl;
 
 
@@ -12,9 +13,10 @@ public class Main {
     public static void main(String[] args) {
 
         RoomServiceImpl roomService = new RoomServiceImpl();
+        InputReceiver inputReceiver = new InputReceiver();
         boolean appOn = true;
 
-        while(appOn) {
+        while (appOn) {
             showMainMenu();
 
             switch (scanner.nextInt()) {
@@ -22,28 +24,25 @@ public class Main {
                 case 1 -> System.out.println(roomService.getAllRooms() + "\n");
                 // show more information about room with specific number
                 case 2 -> {
-                    System.out.println(TYPE_ROOM_NUMBER);
-                    String number = scanner.next();
+                    String number = inputReceiver.inputRoomNumber(scanner);
+                    System.out.println("\nRoom details:\n");
                     System.out.println(roomService.showRoomDetails(number));
                 }
                 // Add room
                 case 3 -> {
-                    System.out.println(TYPE_ROOM_NUMBER);
-                    Room room = typeRoom();
+                    Room room = inputReceiver.typeRoom(scanner);
                     roomService.saveRoom(room);
                     System.out.println("Room added: " + roomService.getRoomByRoomNumber(room.getRoomNumber()));
                 }
                 // Edit room
                 case 4 -> {
-                    System.out.println(TYPE_ROOM_NUMBER);
-                    Room room = typeRoom();
+                    Room room = inputReceiver.typeRoom(scanner);
                     System.out.println(room);
                     roomService.editRoom(room);
                 }
                 // Delete room
                 case 5 -> {
-                    System.out.println(TYPE_ROOM_NUMBER);
-                    String number = scanner.next();
+                    String number = inputReceiver.inputRoomNumber(scanner);
                     roomService.deleteRoom(number);
                 }
                 // Showing rooms with specific capacity
@@ -58,16 +57,5 @@ public class Main {
                 }
             }
         }
-    }
-
-    private static Room typeRoom() {
-        String numer = scanner.next();
-        System.out.println("Type number of single beds:");
-        int singlebed = scanner.nextInt();
-        System.out.println("Type number of double bed:");
-        int doubleBed = scanner.nextInt();
-        System.out.println("Does the room contain balcony? true/false");
-        boolean balkon = scanner.nextBoolean();
-        return new Room(numer, singlebed, doubleBed, balkon);
     }
 }

@@ -44,10 +44,9 @@ public class Room {
     }
 
     public void setDoubleBeds(int doubleBeds) {
-        roomCapacity = singleBeds + 2*doubleBeds;
+        roomCapacity = singleBeds + 2 * doubleBeds;
         this.doubleBeds = doubleBeds;
     }
-
 
 
     public boolean isBalcony() {
@@ -57,7 +56,6 @@ public class Room {
     public void setBalcony(boolean balcony) {
         this.balcony = balcony;
     }
-
 
 
     public String roomDetails() {
@@ -73,4 +71,6 @@ public class Room {
                 ", Room capacity: " + roomCapacity +
                 ", Balcony: " + balcony;
     }
+
+
 }
